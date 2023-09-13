@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prosta Gra w JavaScript</title>
+</head>
+<body>
+    <h1>Prosta Gra w JavaScript</h1>
+    <p>Od 1 do 10. Masz 3 próby na odgadnięcie liczby.</p>
+
+    <input type="text" id="guess" placeholder="Odgadnij liczbę">
+    <button onclick="checkGuess()">Sprawdź</button>
+
+    <p id="message"></p>
+
+    <script>
+        // Generowanie losowej liczby od 1 do 10
+        const targetNumber = Math.floor(Math.random() * 10) + 1;
+        let attempts = 3;
+
+        function checkGuess() {
+            const guess = parseInt(document.getElementById('guess').value);
+
+            if (isNaN(guess) || guess < 1 || guess > 10) {
+                setMessage('Podaj liczbę od 1 do 10.');
+                return;
+            }
+
+            if (guess === targetNumber) {
+                setMessage('Gratulacje! Odgadłeś liczbę!');
+                disableInput();
+            } else if (guess < targetNumber) {
+                setMessage('Podana liczba jest za mała. Pozostało prób: ' + attempts);
+            } else {
+                setMessage('Podana liczba jest za duża. Pozostało prób: ' + attempts);
+            }
+
+            attempts--;
+
+            if (attempts === 0) {
+                setMessage(`Przegrałeś. Prawidłowa liczba to ${targetNumber}.`);
+                disableInput();
+            }
+        }
+
+        function setMessage(message) {
+            document.getElementById('message').textContent = message;
+        }
+
+        function disableInput() {
+            document.getElementById('guess').disabled = true;
+            document.querySelector('button').disabled = true;
+        }
+    </script>
+     
+</body>
+</html>
